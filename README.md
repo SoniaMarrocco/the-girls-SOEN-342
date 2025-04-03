@@ -15,3 +15,5 @@
 
 javac -cp .:libs/sqlite-jdbc-3.49.1.0.jar Database/SQLiteDBCreator.java
 java -cp .:libs/sqlite-jdbc-3.49.1.0.jar Database.SQLiteDBCreator
+
+Database/auction_system.db 
