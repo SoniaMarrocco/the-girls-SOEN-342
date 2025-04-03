@@ -10,3 +10,8 @@
 
 ## Iteration2:
   Design Pattern: Singletone implemented in Administrator class
+
+
+
+javac -cp .:libs/sqlite-jdbc-3.49.1.0.jar Database/SQLiteDBCreator.java
+java -cp .:libs/sqlite-jdbc-3.49.1.0.jar Database.SQLiteDBCreator
