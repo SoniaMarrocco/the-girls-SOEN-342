@@ -19,7 +19,7 @@ public class SQLiteDBCreator {
             // Creating tables (as you already have)
             String[] createTables = {
                 "CREATE TABLE IF NOT EXISTS Administrator (adminID INTEGER PRIMARY KEY, name TEXT);",
-                "CREATE TABLE IF NOT EXISTS Client (clientId INTEGER PRIMARY KEY, email TEXT, password TEXT, affiliation TEXT, contactInfo TEXT, description TEXT);",
+                "CREATE TABLE IF NOT EXISTS Client (clientId INTEGER PRIMARY KEY, name TEXT, email TEXT, password TEXT, affiliation TEXT, contactInfo TEXT, description TEXT);",
                 "CREATE TABLE IF NOT EXISTS Client_Auction (client INTEGER, auctionID INTEGER, FOREIGN KEY(client) REFERENCES Client(clientId), FOREIGN KEY(auctionID) REFERENCES normalAuction(auctionID));",
                 "CREATE TABLE IF NOT EXISTS normalAuction (auctionID INTEGER PRIMARY KEY, speciality TEXT, auctionTitle TEXT, auctionHouseId INTEGER, viewingId INTEGER, FOREIGN KEY(auctionHouseId) REFERENCES AuctionHouse(auctionHouseId), FOREIGN KEY(viewingId) REFERENCES viewing(viewingId));",
                 "CREATE TABLE IF NOT EXISTS onlineAuction (auctionID INTEGER PRIMARY KEY, speciality TEXT, auctionTitle TEXT, auctionHouseId INTEGER, FOREIGN KEY(auctionHouseId) REFERENCES AuctionHouse(auctionHouseId));",
@@ -63,8 +63,8 @@ public class SQLiteDBCreator {
 
             // Insert Clients
             String[] clients = {
-                "INSERT INTO Client (email, password, affiliation, contactInfo, description) VALUES ('alice@example.com', 'password1', 'Gallery A', '123-456-7890', 'Art collector');",
-                "INSERT INTO Client (email, password, affiliation, contactInfo, description) VALUES ('bob@example.com', 'password2', 'Museum B', '987-654-3210', 'Antique enthusiast');"
+                "INSERT INTO Client (name, email, password, affiliation, contactInfo, description) VALUES ('alice', 'alice@example.com', 'password1', 'Gallery A', '123-456-7890', 'Art collector');",
+                "INSERT INTO Client (name, email, password, affiliation, contactInfo, description) VALUES ('bob', 'bob@example.com', 'password2', 'Museum B', '987-654-3210', 'Antique enthusiast');"
             };
             for (String sql : clients) {
                 stmt.executeUpdate(sql);
