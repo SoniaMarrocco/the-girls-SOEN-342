@@ -95,8 +95,48 @@ public class Objects {
         }
     }
 
-    public void selectObject(int i) {
-        objects.get(i).toString();
+    public static Objects selectObject(int objectId) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Objects object = null;
+        
+        try {
+            conn = DatabaseManager.getConnection();
+            
+            // Using "objectsId" as the column name based on your Objects.searchObject method
+            String query = "SELECT name, description, available FROM Objects WHERE objectsId = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, objectId);
+            
+            rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                // Create Objects instance using your constructor
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                Boolean available = rs.getBoolean("available");
+                
+                object = new Objects(name, description, available);
+            } else {
+                System.out.println("Object with ID " + objectId + " not found.");
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Database error while retrieving object: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.err.println("Error closing database resources: " + e.getMessage());
+            }
+        }
+        
+        return object;
     }
 
     public String toString() {

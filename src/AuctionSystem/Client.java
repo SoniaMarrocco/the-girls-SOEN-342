@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import Database.DatabaseManager;
 
@@ -15,10 +16,11 @@ public class Client {
     private String contact_info;
     private String description;
 
+    public Viewing viewing;
     public ArrayList<Objects> obj;
     public ArrayList<AuctionHouse> auction_house;
     public ArrayList<Auction> auction;
-    public ArrayList<Viewing> viewing;
+    
     // public ArrayList<Services> service = new ArrayList<>();
     private static Client loggedInClient = null;
 
@@ -29,6 +31,7 @@ public class Client {
         this.affiliation = affiliation;
         this.contact_info = contact_info;
         this.description = description;
+        this.viewing = new Viewing();
     }
 
 
@@ -142,13 +145,13 @@ public class Client {
 
 
 
-    public ArrayList<Viewing> getViewing() {
+    public Viewing getViewing() {
         return viewing;
     }
 
 
 
-    public void setViewing(ArrayList<Viewing> viewing) {
+    public void setViewing(Viewing viewing) {
         this.viewing = viewing;
     }
 
@@ -173,13 +176,22 @@ public class Client {
     }
 
 
-    public static Client client_login(String email, String password) {
+    public static Client client_login() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        while(true) {
+        System.out.print("Enter your email: ");
+        String email = scanner.nextLine();
+        System.out.print("Enter your password: ");
+        String pass = scanner.nextLine();
         try {
-            Client client = verifyCredentials(email, password);
+            Client client = verifyCredentials(email, pass);
 
             if (client != null) {
                 loggedInClient = client;
                 System.out.println("Login successful! Welcome, " + client.getName());
+                break;
             } else {
                 System.out.println("Invalid email or password.");
             }
@@ -187,6 +199,7 @@ public class Client {
         } catch (SQLException e) {
             System.err.println("Database error during login: " + e.getMessage());
         }
+    }
         return loggedInClient;
     }
 
