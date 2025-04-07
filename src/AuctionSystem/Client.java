@@ -173,64 +173,56 @@ public class Client {
     }
 
 
-    /**
- * Log in a client with the given email and password
- * @param email Client's email
- * @param password Client's password
- */
-public static Client client_login(String email, String password) {
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    
-    try {
-        // Get the connection from the DatabaseManager
-        Connection conn = DatabaseManager.getConnection();
-        
-        // Query to find client by email and password
-        String sql = "SELECT * FROM Client WHERE email = ? AND password = ?";
-        pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, email);
-        pstmt.setString(2, password);
-        
-        rs = pstmt.executeQuery();
-        
-        if (rs.next()) {
-            // Create client object from database data
-            Client client = new Client(
-                rs.getString("name"),
-                rs.getString("email"),
-                rs.getString("password"),
-                rs.getString("affiliation"),
-                rs.getString("contactInfo"),
-                rs.getString("description")
-            );
-            
-            // Set as logged in client
-            loggedInClient = client;
-            System.out.println("Login successful! Welcome, " + client.getName());
-        } else {
-            System.out.println("Invalid email or password.");
-        }
-        
-    } catch (SQLException e) {
-        System.err.println("Database error during login: " + e.getMessage());
-    } finally {
-        // Close only the statement and result set, not the connection
+    public static Client client_login(String email, String password) {
         try {
+            Client client = verifyCredentials(email, password);
+
+            if (client != null) {
+                loggedInClient = client;
+                System.out.println("Login successful! Welcome, " + client.getName());
+            } else {
+                System.out.println("Invalid email or password.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Database error during login: " + e.getMessage());
+        }
+        return loggedInClient;
+    }
+
+    private static Client verifyCredentials(String email, String password) throws SQLException {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Client client = null;
+
+        try {
+            Connection conn = DatabaseManager.getConnection();
+
+            // Query to find client by email and password
+            String sql = "SELECT * FROM Client WHERE email = ? AND password = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                client = new Client(
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("affiliation"),
+                        rs.getString("contactInfo"),
+                        rs.getString("description")
+                );
+            }
+
+        } finally {
             if (rs != null) rs.close();
             if (pstmt != null) pstmt.close();
-        } catch (SQLException e) {
-            System.err.println("Error closing database resources: " + e.getMessage());
         }
-    }
-    return loggedInClient;
-}
 
-
-
-    //for log in
-    public void validateCredentials() {
-
+        return client;
     }
 
 
