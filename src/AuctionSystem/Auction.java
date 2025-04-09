@@ -4,6 +4,8 @@ import java.util.ArrayList;
 public class Auction {
     private String specialty;
     private String auction_title;
+    public  Viewing viewing;
+
     private ArrayList<Auction> auctions;
     public static ArrayList<Objects> objects;
     

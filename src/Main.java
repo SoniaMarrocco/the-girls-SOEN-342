@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import static AuctionSystem.Client.client_login;
+import static AuctionSystem.Client.login;
 import static AuctionSystem.Objects.searchObject;
 import static AuctionSystem.Objects.selectObject;
 
@@ -18,8 +18,6 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         try {
-            // Just initialize the connection through your existing DatabaseManager
-            // This sets up the connection for the entire application
             DatabaseManager.getConnection();
             System.out.println("Connected to the database.");
 
@@ -27,7 +25,7 @@ public class Main {
             System.err.println("Database error: " + e.getMessage());
         }
 
-        System.out.println("Welcome to the Auction system!\n ");
+        System.out.println("=== Welcome to the Auction System ===");
         while(true) {
             System.out.println("\nHome Page");
             System.out.print("[1] Signup \n[2] Login \n[3] Enter System as Admin \n[4] Exit System\n");
@@ -55,12 +53,12 @@ public class Main {
 
             else if (option == 2) {
 
-                loggedInClient = client_login();
+                loggedInClient = login();
 
                 while(true) {
                     System.out.println("[1]: Search Object");
                     System.out.println("[2]: Search Auction");
-                    System.out.println("[3]: Exit");
+                    System.out.println("[3]: Logout");
 
                     int clientOption = scanner.nextInt();
 
@@ -68,14 +66,14 @@ public class Main {
                         searchObject();
                         System.out.print("Please enter the object ID of desired object: ");
                         int objectId = scanner.nextInt();
-                        scanner.nextLine(); // Consume newline left-over
+                        scanner.nextLine();
                         
-                        // Get object from database using the separate method
                         Objects object = selectObject(objectId);
                         
                         if (object != null) {
                             // Display object information
                             System.out.println("Object Details:");
+                            System.out.println("Name: " + object.getName());
                             System.out.println("Description: " + object.getDescription());
                             System.out.println("Available: " + (object.getAvailable() ? "Yes" : "No"));
                             
@@ -90,7 +88,8 @@ public class Main {
                                         break;
                                     }
                                     else if (viewingOption == 1) {
-                                        loggedInClient.getViewing().viewingRegistration();
+//                                        object.getAuction().getViewing().viewingRegistration(loggedInClient);
+                                        System.out.println ("Successfully signed up for auction viewing");
                                         break;
                                     }
                                     else {
