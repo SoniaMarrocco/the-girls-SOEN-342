@@ -20,7 +20,7 @@ public class Viewing {
         this.viewingId = viewingId;
     }
 
-    public void viewingRegistration(...) {
+    public void viewingRegistration() {
 
     }
 
