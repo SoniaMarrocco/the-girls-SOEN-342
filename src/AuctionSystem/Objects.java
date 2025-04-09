@@ -15,9 +15,13 @@ public class Objects {
         this.available = available;
     }
 
+    public Objects(){
+
+    }
+
     // --- Static Methods for Object Interactions (No SQL) ---
 
-    public static void searchObject() {
+    public void searchObject() {
         try {
             ObjectsDB.printAllObjects();  // Just prints them from DB
         } catch (Exception e) {
@@ -25,7 +29,7 @@ public class Objects {
         }
     }
 
-    public static Objects selectObject(int objectId) {
+    public Objects selectObject(int objectId) {
         try {
             return ObjectsDB.getObjectById(objectId);  // Loads object from DB
         } catch (Exception e) {

@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import static AuctionSystem.Client.login;
-import static AuctionSystem.Objects.searchObject;
-import static AuctionSystem.Objects.selectObject;
 
 public class Main {
     public static void main(String[] args) {
@@ -79,12 +77,12 @@ public class Main {
                     int clientOption = scanner.nextInt();
 
                     if (clientOption == 1) {
-                        searchObject();
+                        loggedInClient.getObjects().searchObject();
                         System.out.print("Please enter the object ID of desired object: ");
                         int objectId = scanner.nextInt();
                         scanner.nextLine();
                         
-                        Objects object = selectObject(objectId);
+                        Objects object =  loggedInClient.getObjects().selectObject(objectId);
                         
                         if (object != null) {
                             // Display object information
@@ -119,8 +117,12 @@ public class Main {
                         }
                     }
                     else if (clientOption == 2) {
-                        // Search Auction code
-                    }
+                        loggedInClient.getAuction().searchAuction();
+                        System.out.print("Please enter the Auction ID of desired Auction: ");
+                        int auctionId = scanner.nextInt();
+                        scanner.nextLine();
+
+                        Auction auction = loggedInClient.getAuction().selectAuction(auctionId);                    }
                     else if (clientOption == 3) {
                         break;
                     }

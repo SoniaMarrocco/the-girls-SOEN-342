@@ -1,19 +1,18 @@
 package AuctionSystem;
-import java.util.ArrayList;
+
+import DBaccess.AuctionDB;
 
 public class Auction {
     private String specialty;
-    private String auction_title;
-    public  Viewing viewing;
+    private String auctionTitle;
+    public Viewing viewing;
 
-    private ArrayList<Auction> auctions;
-    public static ArrayList<Objects> objects;
-    
-    public Auction(String specialty, String auction_title) {
+    public Auction( String specialty, String auctionTitle) {
         this.specialty = specialty;
-        this.auction_title = auction_title;
+        this.auctionTitle = auctionTitle;
     }
-
+    public Auction(){
+    }
     public String getSpecialty() {
         return specialty;
     }
@@ -22,49 +21,54 @@ public class Auction {
         this.specialty = specialty;
     }
 
-    public String getAuction_title() {
-        return auction_title;
+    public String getAuctionTitle() {
+        return auctionTitle;
     }
 
-    public void setAuction_title(String auction_title) {
-        this.auction_title = auction_title;
+    public void setAuctionTitle(String auctionTitle) {
+        this.auctionTitle = auctionTitle;
     }
 
-    public ArrayList<Auction> getAuctions() {
-        return auctions;
+    public Viewing getViewing() {
+        return viewing;
     }
 
-    public void setAuctions(ArrayList<Auction> auctions) {
-        this.auctions = auctions;
+    public void setViewing(Viewing viewing) {
+        this.viewing = viewing;
     }
 
-    public static ArrayList<Objects> getObjects() {
-        return objects;
+    // Static methods for interaction
+    public void searchAuction() {
+        try {
+            AuctionDB.printAllAuctions();
+        } catch (Exception e) {
+            System.err.println("Error retrieving auctions: " + e.getMessage());
+        }
     }
 
-    public static void setObjects(ArrayList<Objects> objects) {
-        Auction.objects = objects;
-    }
-
-    public void searchAuction()  {
-        if (auctions.size() != 0) {
-            for (int i = 0; i < auctions.size(); i++) {
-                System.out.print(i + 1 + auctions.get(i).toString());
+    public Auction selectAuction(int auctionID) {
+        try {
+            Auction auction = AuctionDB.getAuctionById(auctionID);
+            if (auction != null) {
+                System.out.println("\n--- Auction Details ---");
+                System.out.println("Title     : " + auction.getAuctionTitle());
+                System.out.println("Specialty : " + auction.getSpecialty());
+                System.out.println("------------------------\n");
+            } else {
+                System.out.println("Auction not found with ID: " + auctionID);
             }
-        }
-        else {
-            System.out.println("No auctions exist in the system");
+            return auction;
+        } catch (Exception e) {
+            System.err.println("Error selecting auction: " + e.getMessage());
+            return null;
         }
     }
 
-    public void selectAuction(int i) {
-        auctions.get(i).toString();
-    }
 
+
+    @Override
     public String toString() {
-        return this.auction_title;    
+        return  auctionTitle + " (" + specialty + ")";
     }
-    
-    
-
 }
+
