@@ -1,6 +1,7 @@
 package AuctionSystem;
 
 import DBaccess.AdminDB;
+import DBaccess.ExpertDB;
 
 import java.util.ArrayList;
 
@@ -50,6 +51,20 @@ public class Administrator {
         } catch (Exception e) {
             System.err.println("Error during client sign-up approval: " + e.getMessage());
             return false;
+        }
+    }
+
+    public void createExpertAccount(String name, String email, String username, String password, String contact, int licenseNum) {
+        try {
+            Expert expert = new Expert(name, email, username, password, contact, licenseNum, null, null);
+            boolean success = ExpertDB.insertExpert(expert);
+            if (success) {
+                System.out.println("Expert account successfully created.");
+            } else {
+                System.out.println("Failed to create expert account.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error creating expert account: " + e.getMessage());
         }
     }
 

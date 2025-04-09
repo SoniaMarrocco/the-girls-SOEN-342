@@ -28,28 +28,44 @@ public class Main {
         System.out.println("=== Welcome to the Auction System ===");
         while(true) {
             System.out.println("\nHome Page");
-            System.out.print("[1] Signup \n[2] Login \n[3] Enter System as Admin \n[4] Exit System\n");
+            System.out.print("[1] Signup \n[2] Client Login \n[3] Expert Login\n[4] Enter System as Admin \n[5] Exit System\n");
 
             int option = scanner.nextInt();
 
-            if (option == 1){
-                System.out.println("Please enter all the information below:/n");
-                String garbage = scanner.nextLine();
-                System.out.println("Name: ");
-                String name = scanner.nextLine();
-                System.out.println("Email: ");
-                String email = scanner.nextLine();
-                System.out.println("Password (Must be greater than 8 characters): ");
-                String pass = scanner.nextLine();
-                System.out.println("Affiliation: ");
-                String aff = scanner.nextLine();
-                System.out.println("Contact Information: ");
-                String contact = scanner.nextLine();
-                System.out.println("Description: ");
-                String desc = scanner.nextLine();
-                admin.createAccount(name, email, pass, aff,contact, desc);
+            if (option == 1) {
+                System.out.println("\n[1] Sign up as Client\n[2] Sign up as Expert\n");
+                int signupChoice = scanner.nextInt();
+                scanner.nextLine(); // consume newline
 
+                if (signupChoice == 1) {
+                    System.out.println("\n--- Client Signup ---");
+                    System.out.print("Name: ");String name = scanner.nextLine();
+                    System.out.print("Email: "); String email = scanner.nextLine();
+                    System.out.print("Password (min 8 characters): "); String password = scanner.nextLine();
+                    System.out.print("Affiliation: ");String affiliation = scanner.nextLine();
+                    System.out.print("Contact Info: ");String contact = scanner.nextLine();
+                    System.out.print("Description: ");String description = scanner.nextLine();
+
+                    admin.createAccount(name, email, password, affiliation, contact, description);
+                }
+
+                else if (signupChoice == 2) {
+                    System.out.println("\n--- Expert Signup ---");
+                    System.out.print("Name: ");String name = scanner.nextLine();
+                    System.out.print("Email: ");String email = scanner.nextLine();
+                    System.out.print("Username: ");String username = scanner.nextLine();
+                    System.out.print("Password: ");String password = scanner.nextLine();
+                    System.out.print("Contact Info: ");String contact = scanner.nextLine();
+                    System.out.print("License Number: ");int licenseNum = scanner.nextInt();
+                    scanner.nextLine(); // consume newline
+
+                    admin.createExpertAccount(name, email, username, password, contact, licenseNum);
+                }
+                else {
+                    System.out.println("Invalid signup option.");
+                }
             }
+
 
             else if (option == 2) {
 
@@ -117,6 +133,10 @@ public class Main {
                 System.out.println("3");
             }
             else if (option == 4){
+                System.out.println("3");
+
+            }
+            else if (option == 5){
                 break;
             }
             else {

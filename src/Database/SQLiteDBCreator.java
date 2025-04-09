@@ -27,7 +27,7 @@ public class SQLiteDBCreator {
                     "CREATE TABLE IF NOT EXISTS viewing (viewingId INTEGER PRIMARY KEY, auctionHouseId INTEGER, FOREIGN KEY(auctionHouseId) REFERENCES AuctionHouse(auctionHouseId));",
                     "CREATE TABLE IF NOT EXISTS AuctionHouse (auctionHouseId INTEGER PRIMARY KEY, name TEXT);",
                     "CREATE TABLE IF NOT EXISTS Objects (objectsId INTEGER PRIMARY KEY, name TEXT, description TEXT, available BOOLEAN, auctionHouseID INTEGER, normalAuctionId INTEGER, onlineAuctionId INTEGER, FOREIGN KEY(auctionHouseID) REFERENCES AuctionHouse(auctionHouseId), FOREIGN KEY(normalAuctionId) REFERENCES normalAuction(auctionId), FOREIGN KEY(onlineAuctionId) REFERENCES onlineAuction(auctionID));",
-                    "CREATE TABLE IF NOT EXISTS Expert (expertId INTEGER PRIMARY KEY, name TEXT, contact TEXT, licenseNum TEXT, specialty TEXT);",
+                    "CREATE TABLE IF NOT EXISTS Expert (expertId INTEGER PRIMARY KEY, name TEXT, contact TEXT, licenseNum TEXT, specialty TEXT, email TEXT UNIQUE, password TEXT);",
                     "CREATE TABLE IF NOT EXISTS objectAdvising (serviceID INTEGER PRIMARY KEY, type TEXT, time TEXT, clientId INTEGER, expertId INTEGER, FOREIGN KEY(clientId) REFERENCES Client(clientId), FOREIGN KEY(expertId) REFERENCES Expert(expertId));",
                     "CREATE TABLE IF NOT EXISTS consulting (consultingID INTEGER PRIMARY KEY, type TEXT, time TEXT, clientId INTEGER, expertId INTEGER, FOREIGN KEY(clientId) REFERENCES Client(clientId), FOREIGN KEY(expertId) REFERENCES Expert(expertId));",
                     "CREATE TABLE IF NOT EXISTS auctionAttendance (attendanceID INTEGER PRIMARY KEY, type TEXT, time TEXT, clientId INTEGER, expertId INTEGER, FOREIGN KEY(clientId) REFERENCES Client(clientId), FOREIGN KEY(expertId) REFERENCES Expert(expertId));",
@@ -81,8 +81,8 @@ public class SQLiteDBCreator {
 
             // Insert Experts
             String[] experts = {
-                    "INSERT INTO Expert (name, contact, licenseNum, specialty) VALUES ('John Doe', 'john.doe@example.com', 'EX12345', 'Art Expert');",
-                    "INSERT INTO Expert (name, contact, licenseNum, specialty) VALUES ('Jane Smith', 'jane.smith@example.com', 'EX67890', 'Antique Expert');"
+                    "INSERT INTO Expert (name, contact, licenseNum, specialty, email, password) VALUES ('John Doe', 'john.doe@example.com', 'EX12345', 'Art Expert', 'john@example.com', 'password123');",
+                    "INSERT INTO Expert (name, contact, licenseNum, specialty, email, password) VALUES ('Jane Smith', 'jane.smith@example.com', 'EX67890', 'Antique Expert', 'jane@example.com', 'jane');"
             };
             for (String sql : experts) {
                 stmt.executeUpdate(sql);
