@@ -1,148 +1,55 @@
 package AuctionSystem;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import Database.DatabaseManager;
 
-import java.util.ArrayList;
+import DBaccess.ObjectsDB;
 
 public class Objects {
     private String name;
     private String description;
     private Boolean available;
-    private ArrayList<Object> objects;
+    private Auction auction;  // Optional if you track it in-memory
 
+    // Constructor
     public Objects(String name, String description, Boolean available) {
         this.name = name;
         this.description = description;
         this.available = available;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
-
-    public ArrayList<Object> getObjects() {
-        return objects;
-    }
-
-    public void setObjects(ArrayList<Object> objects) {
-        this.objects = objects;
-    }
-
-
-    public void makeObjectAvailable(int obj_Id){}
+    // --- Static Methods for Object Interactions (No SQL) ---
 
     public static void searchObject() {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
         try {
-            // Establish connection to your database
-            conn = DatabaseManager.getConnection(); // Assuming you have a connection utility class
-
-            // Create a query to select all objects
-            String query = "SELECT objectsId, name, description FROM Objects";
-            stmt = conn.prepareStatement(query);
-
-            // Execute the query
-            rs = stmt.executeQuery();
-
-            int count = 0;
-
-            // Process the results
-            while (rs.next()) {
-                count++;
-                int objectId = rs.getInt("objectsId");
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-
-                System.out.println(count + ". Object ID: " + objectId);
-                System.out.println("   Name: " + name);
-                System.out.println("   Description: " + description);
-                System.out.println();
-            }
-
-            if (count == 0) {
-                System.out.println("No objects exist in the system");
-            }
-
-        } catch (SQLException e) {
+            ObjectsDB.printAllObjects();  // Just prints them from DB
+        } catch (Exception e) {
             System.err.println("Error searching for objects: " + e.getMessage());
-        } finally {
-            // Close resources to prevent memory leaks
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                System.err.println("Error closing database resources: " + e.getMessage());
-            }
         }
     }
 
     public static Objects selectObject(int objectId) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        Objects object = null;
-        
         try {
-            conn = DatabaseManager.getConnection();
-            
-            // Using "objectsId" as the column name based on your Objects.searchObject method
-            String query = "SELECT name, description, available FROM Objects WHERE objectsId = ?";
-            stmt = conn.prepareStatement(query);
-            stmt.setInt(1, objectId);
-            
-            rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-                // Create Objects instance using your constructor
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                Boolean available = rs.getBoolean("available");
-                
-                object = new Objects(name, description, available);
-            } else {
-                System.out.println("Object with ID " + objectId + " not found.");
-            }
-            
-        } catch (SQLException e) {
-            System.err.println("Database error while retrieving object: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                System.err.println("Error closing database resources: " + e.getMessage());
-            }
+            return ObjectsDB.getObjectById(objectId);  // Loads object from DB
+        } catch (Exception e) {
+            System.err.println("Error selecting object: " + e.getMessage());
+            return null;
         }
-        
-        return object;
     }
 
+    @Override
     public String toString() {
-        return this.description;    
+        return "Name: " + name + "\nDescription: " + description + "\nAvailable: " + (available ? "Yes" : "No");
     }
 
-    
+    // --- Getters and Setters ---
 
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public Boolean getAvailable() { return available; }
+    public void setAvailable(Boolean available) { this.available = available; }
+
+    public Auction getAuction() { return auction; }
+    public void setAuction(Auction auction) { this.auction = auction; }
 }
