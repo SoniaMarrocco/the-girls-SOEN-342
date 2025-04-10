@@ -19,8 +19,6 @@ public class Objects {
 
     }
 
-    // --- Static Methods for Object Interactions (No SQL) ---
-
     public void searchObject() {
         try {
             ObjectsDB.printAllObjects();  // Just prints them from DB

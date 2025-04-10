@@ -36,7 +36,6 @@ public class Administrator {
 
     public boolean approveClientSignUp(Client client) {
         try {
-            // Check if already registered or password too short
             if (AdminDB.isEmailRegistered(client.getEmail())) {
                 System.out.println("Email is already registered.");
                 return false;

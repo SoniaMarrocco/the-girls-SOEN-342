@@ -1,4 +1,5 @@
 import AuctionSystem.*;
+import DBaccess.*;
 import Database.DatabaseManager;
 
 import java.sql.Connection;
@@ -8,9 +9,10 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import static AuctionSystem.Client.login;
+import static DBaccess.ObjectsDB.getViewingFromObject;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Client loggedInClient;
         Administrator admin = Administrator.getInstance("Admin");
 
@@ -92,7 +94,7 @@ public class Main {
                             System.out.println("Available: " + (object.getAvailable() ? "Yes" : "No"));
                             
                             // Check if the object is in an auction
-                            boolean inAuction = isObjectInAuction(objectId);
+                            boolean inAuction = ObjectsDB.isObjectInAuction(objectId);
                             
                             while (true) {
                                 if (inAuction) {
@@ -102,7 +104,12 @@ public class Main {
                                         break;
                                     }
                                     else if (viewingOption == 1) {
-//                                        object.getAuction().getViewing().viewingRegistration(loggedInClient);
+                                        Viewing viewing = getViewingFromObject(objectId);
+                                        if (viewing != null) {
+                                            viewing.viewingRegistration(loggedInClient);
+                                        } else {
+                                            System.out.println("No viewing found for this object.");
+                                        }
                                         System.out.println ("Successfully signed up for auction viewing");
                                         break;
                                     }
@@ -149,42 +156,5 @@ public class Main {
         System.out.println("\nThank you for using the Auction System!");
     }
     
-    private static boolean isObjectInAuction(int objectId) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        boolean inAuction = false;
-        
-        try {
-            conn = DatabaseManager.getConnection();
-            
-            // Query to check if the normalAuctionID is null
-            String query = "SELECT normalAuctionID FROM Objects WHERE objectsId = ?";
-            stmt = conn.prepareStatement(query);
-            stmt.setInt(1, objectId);
-            
-            rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-                // Check if normalAuctionID is not null
-                Object auctionId = rs.getObject("normalAuctionID");
-                inAuction = (auctionId != null);
-            }
-            
-        } catch (SQLException e) {
-            System.err.println("Database error while checking auction status: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                System.err.println("Error closing database resources: " + e.getMessage());
-            }
-        }
-        
-        return inAuction;
-    }
+
 }
