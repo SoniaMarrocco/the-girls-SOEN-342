@@ -20,9 +20,7 @@ public abstract class Service {
 
    // Abstract methods ensure subclasses provide their own implementations
    public abstract void requestService();
-   public void clientBookServiceTime(Client loggedInClient) {
-    
-   }
+   public abstract void clientBookServiceTime(Client loggedInClient, int serviceId);
 }
 
 

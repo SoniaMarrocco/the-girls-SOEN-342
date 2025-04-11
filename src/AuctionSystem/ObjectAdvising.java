@@ -18,4 +18,8 @@ public class ObjectAdvising extends Service{
          ServiceDB.getAllObjectAdvising();
 
     }
+
+    public void clientBookServiceTime(Client loggedInClient, int serviceId) {
+        serviceDB.
+    }
 }

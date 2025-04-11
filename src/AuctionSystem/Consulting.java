@@ -19,4 +19,8 @@ public class Consulting extends Service{
          ServiceDB.getAllConsultingServices();
 
     }
+
+    public void clientBookServiceTime(Client loggedInClient, int serviceId) {
+        
+    }
 }

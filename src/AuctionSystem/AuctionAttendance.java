@@ -18,5 +18,9 @@ public class AuctionAttendance extends Service{
     public void requestService() {
         ServiceDB.getAllAuctionAttendance();
     }
+
+    public void clientBookServiceTime(Client loggedInClient, int serviceId) {
+
+    }
     
 }
