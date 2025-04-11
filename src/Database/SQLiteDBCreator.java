@@ -16,7 +16,7 @@ public class SQLiteDBCreator {
                 System.out.println("Connected to SQLite database.");
             }
 
-            // Creating tables (modified Objects table)
+            // Creating tables (modified service tables with startTime and endTime)
             String[] createTables = {
                     "CREATE TABLE IF NOT EXISTS Administrator (adminID INTEGER PRIMARY KEY, name TEXT);",
                     "CREATE TABLE IF NOT EXISTS Client (clientId INTEGER PRIMARY KEY, name TEXT, email TEXT, password TEXT, affiliation TEXT, contactInfo TEXT, description TEXT);",
@@ -28,9 +28,9 @@ public class SQLiteDBCreator {
                     "CREATE TABLE IF NOT EXISTS AuctionHouse (auctionHouseId INTEGER PRIMARY KEY, name TEXT);",
                     "CREATE TABLE IF NOT EXISTS Objects (objectsId INTEGER PRIMARY KEY, name TEXT, description TEXT, available BOOLEAN, auctionHouseID INTEGER, normalAuctionId INTEGER, onlineAuctionId INTEGER, FOREIGN KEY(auctionHouseID) REFERENCES AuctionHouse(auctionHouseId), FOREIGN KEY(normalAuctionId) REFERENCES normalAuction(auctionId), FOREIGN KEY(onlineAuctionId) REFERENCES onlineAuction(auctionID));",
                     "CREATE TABLE IF NOT EXISTS Expert (expertId INTEGER PRIMARY KEY, name TEXT, contact TEXT, licenseNum TEXT, specialty TEXT, email TEXT UNIQUE, password TEXT);",
-                    "CREATE TABLE IF NOT EXISTS objectAdvising (serviceID INTEGER PRIMARY KEY, type TEXT, time TEXT, clientId INTEGER, expertId INTEGER, FOREIGN KEY(clientId) REFERENCES Client(clientId), FOREIGN KEY(expertId) REFERENCES Expert(expertId));",
-                    "CREATE TABLE IF NOT EXISTS consulting (consultingID INTEGER PRIMARY KEY, type TEXT, time TEXT, clientId INTEGER, expertId INTEGER, FOREIGN KEY(clientId) REFERENCES Client(clientId), FOREIGN KEY(expertId) REFERENCES Expert(expertId));",
-                    "CREATE TABLE IF NOT EXISTS auctionAttendance (attendanceID INTEGER PRIMARY KEY, type TEXT, time TEXT, clientId INTEGER, expertId INTEGER, FOREIGN KEY(clientId) REFERENCES Client(clientId), FOREIGN KEY(expertId) REFERENCES Expert(expertId));",
+                    "CREATE TABLE IF NOT EXISTS objectAdvising (serviceID INTEGER PRIMARY KEY, type TEXT, date TEXT, startTime TEXT, endTime TEXT, clientId INTEGER, expertId INTEGER, FOREIGN KEY(clientId) REFERENCES Client(clientId), FOREIGN KEY(expertId) REFERENCES Expert(expertId));",
+                    "CREATE TABLE IF NOT EXISTS consulting (consultingID INTEGER PRIMARY KEY, type TEXT, date TEXT, startTime TEXT, endTime TEXT, clientId INTEGER, expertId INTEGER, FOREIGN KEY(clientId) REFERENCES Client(clientId), FOREIGN KEY(expertId) REFERENCES Expert(expertId));",
+                    "CREATE TABLE IF NOT EXISTS auctionAttendance (attendanceID INTEGER PRIMARY KEY, type TEXT, date TEXT, startTime TEXT, endTime TEXT, clientId INTEGER, expertId INTEGER, FOREIGN KEY(clientId) REFERENCES Client(clientId), FOREIGN KEY(expertId) REFERENCES Expert(expertId));",
                     "CREATE TABLE IF NOT EXISTS EventSchedule (locationId INTEGER, scheduleId INTEGER, auctionId INTEGER, PRIMARY KEY(locationId, scheduleId), FOREIGN KEY(locationId) REFERENCES Location(locationId), FOREIGN KEY(scheduleId) REFERENCES Schedule(scheduleId), FOREIGN KEY(auctionId) REFERENCES normalAuction(auctionID));",
                     "CREATE TABLE IF NOT EXISTS Location (locationId INTEGER PRIMARY KEY, address TEXT, city TEXT);",
                     "CREATE TABLE IF NOT EXISTS Schedule (scheduleId INTEGER PRIMARY KEY, date TEXT, time TEXT);"
@@ -88,11 +88,11 @@ public class SQLiteDBCreator {
                 stmt.executeUpdate(sql);
             }
 
-            // Insert Services (Object Advising, Consulting, Auction Attendance)
+            // Insert Services (Object Advising, Consulting, Auction Attendance) with startTime and endTime
             String[] services = {
-                    "INSERT INTO objectAdvising (type, time, clientId, expertId) VALUES ('Art valuation', '2024-04-10 10:00', 1, 1);",
-                    "INSERT INTO consulting (type, time, clientId, expertId) VALUES ('Antique appraisal', '2024-04-15 14:00', 2, 2);",
-                    "INSERT INTO auctionAttendance (type, time, clientId, expertId) VALUES ('Auction attendance', '2024-04-20 18:00', 1, 1);"
+                    "INSERT INTO objectAdvising (type, date, startTime, endTime, clientId, expertId) VALUES ('Art valuation', '2024-04-10', '10:00', '12:00', 1, 1);",
+                    "INSERT INTO consulting (type, date, startTime, endTime, clientId, expertId) VALUES ('Antique appraisal', '2024-04-15', '14:00', '16:30', 2, 2);",
+                    "INSERT INTO auctionAttendance (type, date, startTime, endTime, clientId, expertId) VALUES ('Auction attendance', '2024-04-20', '18:00', '21:00', 1, 1);"
             };
             for (String sql : services) {
                 stmt.executeUpdate(sql);

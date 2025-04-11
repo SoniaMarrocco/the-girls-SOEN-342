@@ -15,6 +15,7 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         Client loggedInClient;
         Administrator admin = Administrator.getInstance("Admin");
+        Service service;
 
         Scanner scanner = new Scanner(System.in);
         try {
@@ -74,7 +75,8 @@ public class Main {
                 while(true) {
                     System.out.println("[1]: Search Object");
                     System.out.println("[2]: Search Auction");
-                    System.out.println("[3]: Logout");
+                    System.out.println("[3]: Request a Service");
+                    System.out.println("[4]: Logout");
 
                     int clientOption = scanner.nextInt();
 
@@ -127,10 +129,39 @@ public class Main {
                         loggedInClient.getAuction().searchAuction();
                         System.out.print("Please enter the Auction ID of desired Auction: ");
                         int auctionId = scanner.nextInt();
-                        scanner.nextLine();
+                        
 
-                        Auction auction = loggedInClient.getAuction().selectAuction(auctionId);                    }
+                        Auction auction = loggedInClient.getAuction().selectAuction(auctionId); 
+                    } 
                     else if (clientOption == 3) {
+                        System.out.println("What type of service would you like to book?");
+                        System.out.println("[1]: Object Consulting\n[2]: Object Advising\n[3]: Auction Attendance\n");
+                        int serviceType = scanner.nextInt();
+                        
+                        while (true) {
+                            if (serviceType == 1) {
+                                service = new Consulting();
+                                break;
+                            }
+                            else if (serviceType == 2) {
+                                service = new ObjectAdvising();
+                                break;
+
+                            }
+                            else if (serviceType == 3) {
+                                service = new AuctionAttendance();
+                                break;
+
+                            }
+                            else {
+                                System.out.println("Invalid option. Please try again.");
+
+                            }
+                        }
+                        service.requestService();
+                        
+                    }                  
+                    else if (clientOption == 4) {
                         break;
                     }
                     else {
