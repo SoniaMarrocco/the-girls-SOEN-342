@@ -10,6 +10,25 @@ public class ServiceDB {
         try {
             Connection conn = DatabaseManager.getConnection();
 
+            String countSql = "SELECT COUNT(*) as count FROM " + table;
+            PreparedStatement countStmt = conn.prepareStatement(countSql);
+            ResultSet countRs = countStmt.executeQuery();
+            
+            int recordCount = 0;
+            if (countRs.next()) {
+                recordCount = countRs.getInt("count");
+            }
+            
+            countRs.close();
+            countStmt.close();
+            
+            // If there are no records, inform the user and exit early
+            if (recordCount == 0) {
+                System.out.println("\n=== " + table.toUpperCase() + " Services ===");
+                System.out.println("No services found in " + table + ".");
+                return;
+            }
+            
             String sql = "SELECT * FROM " + table;
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();

@@ -2,6 +2,8 @@ package AuctionSystem;
 
 import DBaccess.AdminDB;
 import DBaccess.ExpertDB;
+import DBaccess.ViewingDB;
+import DBaccess.eventScheduleDB;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -81,9 +83,32 @@ public class Administrator {
         scanner.nextLine(); // consume newline
 
         if (choice == 1) {
+            int viewingId = ViewingDB.createViewing(auctionHouseId);
             NormalAuction normalAuction = new NormalAuction(specialty, title);
-            AdminDB.insertNormalAuction(normalAuction, auctionHouseId); // <-- updated
-            System.out.println("Normal auction created.");
+            AdminDB.insertNormalAuctionWithViewing(normalAuction, auctionHouseId, viewingId); // <-- updated
+
+
+            System.out.print("Address: "); String address = scanner.nextLine();
+            System.out.print("City: "); String city = scanner.nextLine();
+            System.out.print("Date: "); String date = scanner.nextLine();
+            System.out.print("Start Time: "); String startTime = scanner.nextLine();
+            System.out.print("End Time: "); String endTime = scanner.nextLine();
+    
+            int newAuctionId = eventScheduleDB.getLastInsertedAuctionId();
+
+            if (newAuctionId > 0) {
+                // Create the event schedule with the collected information
+                boolean scheduleCreated = eventScheduleDB.createEventSchedule(
+                    address, city, date, startTime, endTime, newAuctionId);
+                
+                if (scheduleCreated) {
+                    System.out.println("Normal auction and schedule created successfully.");
+                } else {
+                    System.out.println("Auction created but there was an error creating the schedule.");
+                }
+            } else {
+                System.out.println("Auction created but couldn't retrieve its ID for scheduling.");
+            }
         } else if (choice == 2) {
             OnlineAuction onlineAuction = new OnlineAuction(specialty, title);
             AdminDB.insertOnlineAuction(onlineAuction, auctionHouseId); // <-- updated

@@ -226,7 +226,7 @@ public class Main {
                     System.out.println("[2] Create Object");
                     System.out.println("[3] Create Auction");
                     System.out.println("[4] Create Auction House");
-                    System.out.println("[5] Exit");
+                    System.out.println("[6] Exit");
                     System.out.print("Choose an option: ");
 
                     int adminOption = scanner.nextInt();
@@ -291,7 +291,6 @@ public class Main {
                     else if (adminOption == 3) {
                         System.out.print("Auction Title: "); String title = scanner.nextLine();
                         System.out.print("Specialty: "); String specialty = scanner.nextLine();
-
                         AdminDB.getAllAuctionHouses();
                         System.out.print("Select Auction House ID to associate with this auction: ");
                         int auctionHouseId = scanner.nextInt();

@@ -49,13 +49,14 @@ public class AdminDB {
         stmt.executeUpdate();
         stmt.close();
     }
-    public static void insertNormalAuction(NormalAuction auction, int auctionHouseId) throws SQLException {
+    public static void insertNormalAuctionWithViewing(NormalAuction auction, int auctionHouseId, int viewingId) throws SQLException {
         Connection conn = DatabaseManager.getConnection();
-        String sql = "INSERT INTO normalAuction (speciality, auctionTitle, auctionHouseId) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO normalAuction (speciality, auctionTitle, auctionHouseId, viewingId) VALUES (?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, auction.getSpecialty());
         stmt.setString(2, auction.getAuctionTitle());
         stmt.setInt(3, auctionHouseId);
+        stmt.setInt(4, viewingId);
         stmt.executeUpdate();
         stmt.close();
     }
