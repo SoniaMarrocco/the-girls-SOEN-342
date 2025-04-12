@@ -8,7 +8,7 @@
 - **Somiya Amroso Colatosti**  
   Student ID: 40190025
 
-  ### ‼️‼️ Combination of all FINAL diagrams are in the [`Iteration3`](.artifacts/Iteration3) folder.
+  ### ‼️‼️ Combination of all FINAL diagrams are in the [`Iteration3`](/artifacts/Iteration3) folder.
   - this includes all iteration 1 and 2 work
 
 # Iteration2:
