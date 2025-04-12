@@ -1,11 +1,15 @@
 package DBaccess;
 
+import AuctionSystem.Auction;
+import AuctionSystem.AuctionHouse;
 import AuctionSystem.Client;
+import AuctionSystem.Objects;
 import Database.DatabaseManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class AdminDB {
 
@@ -38,4 +42,102 @@ public class AdminDB {
         stmt.close();
         return rows > 0;
     }
+
+    //creating objects, auctionhouses, and auctions
+    public static void insertAuctionHouse(AuctionHouse house) throws SQLException {
+        Connection conn = DatabaseManager.getConnection();
+        String sql = "INSERT INTO AuctionHouse (name) VALUES (?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, house.getName());
+        stmt.executeUpdate();
+        stmt.close();
+    }
+    public static void insertAuction(Auction auction, int auctionHouseId) throws SQLException {
+        Connection conn = DatabaseManager.getConnection();
+        String sql = "INSERT INTO normalAuction (speciality, auctionTitle, auctionHouseId) VALUES (?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, auction.getSpecialty());
+        stmt.setString(2, auction.getAuctionTitle());
+        stmt.setInt(3, auctionHouseId);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+    public static void insertObject(Objects object, int auctionHouseId, Integer normalAuctionId, Integer onlineAuctionId) throws SQLException {
+        Connection conn = DatabaseManager.getConnection();
+        String sql = "INSERT INTO Objects (name, description, available, auctionHouseID, normalAuctionId, onlineAuctionId) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+
+        stmt.setString(1, object.getName());
+        stmt.setString(2, object.getDescription());
+        stmt.setBoolean(3, object.getAvailable());
+        stmt.setInt(4, auctionHouseId);
+
+        if (normalAuctionId != null)
+            stmt.setInt(5, normalAuctionId);
+        else
+            stmt.setNull(5, java.sql.Types.INTEGER);
+
+        if (onlineAuctionId != null)
+            stmt.setInt(6, onlineAuctionId);
+        else
+            stmt.setNull(6, java.sql.Types.INTEGER);
+
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+
+    //getting all from the database...
+    public static void getAllAuctionHouses() throws SQLException {
+        Connection conn = DatabaseManager.getConnection();
+        String sql = "SELECT * FROM AuctionHouse";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        System.out.println("\n--- Available Auction Houses ---");
+        while (rs.next()) {
+            int id = rs.getInt("auctionHouseId");
+            String name = rs.getString("name");
+            System.out.println("ID: " + id + " | Name: " + name);
+        }
+        rs.close();
+        stmt.close();
+    }
+
+    public static void getAllNormalAuctions() throws SQLException {
+        Connection conn = DatabaseManager.getConnection();
+        String sql = "SELECT * FROM normalAuction";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        System.out.println("\n--- Available Normal Auctions ---");
+        while (rs.next()) {
+            int id = rs.getInt("auctionID");
+            String title = rs.getString("auctionTitle");
+            String specialty = rs.getString("speciality");
+            System.out.println("ID: " + id + " | Title: " + title + " | Specialty: " + specialty);
+        }
+        rs.close();
+        stmt.close();
+    }
+
+    public static void getAllOnlineAuctions() throws SQLException {
+        Connection conn = DatabaseManager.getConnection();
+        String sql = "SELECT * FROM onlineAuction";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        System.out.println("\n--- Available Online Auctions ---");
+        while (rs.next()) {
+            int id = rs.getInt("auctionID");
+            String title = rs.getString("auctionTitle");
+            String specialty = rs.getString("speciality");
+            System.out.println("ID: " + id + " | Title: " + title + " | Specialty: " + specialty);
+        }
+        rs.close();
+        stmt.close();
+    }
+
+
+
 }

@@ -3,6 +3,7 @@ package AuctionSystem;
 import DBaccess.AdminDB;
 import DBaccess.ExpertDB;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Administrator {
@@ -53,9 +54,9 @@ public class Administrator {
         }
     }
 
-    public void createExpertAccount(String name, String email, String username, String password, String contact, int licenseNum) {
+    public void createExpertAccount(String name, String email, String username, String password, String contact, int licenseNum, String specialty) {
         try {
-            Expert expert = new Expert(name, email, username, password, contact, licenseNum, null, null);
+            Expert expert = new Expert(name, email, username, password, contact, licenseNum, specialty);
             boolean success = ExpertDB.insertExpert(expert);
             if (success) {
                 System.out.println("Expert account successfully created.");
@@ -66,6 +67,28 @@ public class Administrator {
             System.err.println("Error creating expert account: " + e.getMessage());
         }
     }
+
+    public void createAuctionHouse(String name) throws SQLException {
+
+            AuctionHouse auctionHouse = new AuctionHouse( name);
+            AdminDB.insertAuctionHouse(auctionHouse);
+            System.out.println("Auction house created.");
+    }
+
+    public void createAuction(String specialty, String title, int auctionHouseId) throws SQLException {
+
+            Auction auction = new Auction(specialty, title);
+            AdminDB.insertAuction(auction, auctionHouseId);
+            System.out.println("Auction created.");
+    }
+
+    public void createObject(String name, String description, boolean available, int auctionHouseId, Integer normalAuctionId, Integer onlineAuctionId) throws SQLException {
+
+            Objects object = new Objects(name, description, available);
+            AdminDB.insertObject(object, auctionHouseId, normalAuctionId, onlineAuctionId);
+            System.out.println("Object created.");
+    }
+
 
     // --- Getters & Setters ---
 

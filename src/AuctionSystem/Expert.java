@@ -2,6 +2,8 @@ package AuctionSystem;
 
 import DBaccess.ExpertDB;
 
+import java.util.Scanner;
+
 public class Expert {
     private String name;
     private String email;
@@ -9,12 +11,9 @@ public class Expert {
     private String password;
     private String contact;
     private int licenceNum;
-    private int[] specialty;
-    public Objects[] objs;
+    private String specialty;
 
-    private static Expert loggedInExpert;
-
-    public Expert(String name, String email, String username, String password, String contact, int licenceNum, int[] specialty, Objects[] objs) {
+    public Expert(String name, String email, String username, String password, String contact, int licenceNum, String specialty) {
         this.name = name;
         this.email = email;
         this.username = username;
@@ -22,30 +21,32 @@ public class Expert {
         this.contact = contact;
         this.licenceNum = licenceNum;
         this.specialty = specialty;
-        this.objs = objs;
     }
 
-    // Login Logic
-    public static Expert expertLogin(String username, String password) {
-        try {
-            Expert expert = ExpertDB.getExpertByCredentials(username, password);
-            if (expert != null) {
-                loggedInExpert = expert;
-                System.out.println("Login successful. Welcome, " + expert.getName() + "!");
-                return expert;
-            } else {
-                System.out.println("Invalid username or password.");
-                return null;
+    // Expert Login (modeled like Client.login)
+    public static Expert login() {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.print("Enter your username: ");
+            String username = scanner.nextLine();
+
+            System.out.print("Enter your password: ");
+            String password = scanner.nextLine();
+
+            try {
+                Expert expert = ExpertDB.getExpertByCredentials(username, password);
+
+                if (expert != null) {
+                    System.out.println("Login successful! Welcome, " + expert.getName());
+                    return expert;
+                } else {
+                    System.out.println("Invalid username or password. Please try again.");
+                }
+            } catch (Exception e) {
+                System.err.println("Error during expert login: " + e.getMessage());
             }
-        } catch (Exception e) {
-            System.err.println("Error during expert login: " + e.getMessage());
-            return null;
         }
-    }
-
-
-    public static Expert getLoggedInExpert() {
-        return loggedInExpert;
     }
 
     // Getters & Setters
@@ -67,6 +68,6 @@ public class Expert {
     public int getLicenceNum() { return licenceNum; }
     public void setLicenceNum(int licenceNum) { this.licenceNum = licenceNum; }
 
-    public int[] getSpecialty() { return specialty; }
-    public void setSpecialty(int[] specialty) { this.specialty = specialty; }
+    public String getSpecialty() { return specialty; }
+    public void setSpecialty(String specialty) { this.specialty = specialty; }
 }

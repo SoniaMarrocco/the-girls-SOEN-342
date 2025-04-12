@@ -21,13 +21,12 @@ public class ExpertDB {
         if (rs.next()) {
             expert = new Expert(
                     rs.getString("name"),
-                    rs.getString("contact"), // email is stored as contact
+                    rs.getString("email"),
                     rs.getString("username"),
                     rs.getString("password"),
                     rs.getString("contact"),
-                    Integer.parseInt(rs.getString("licenseNum")),
-                    null, // specialty parsing optional
-                    null  // objs
+                    rs.getInt("licenseNum"),
+                    rs.getString("specialty")
             );
         }
 
@@ -38,14 +37,15 @@ public class ExpertDB {
 
     public static boolean insertExpert(Expert expert) throws Exception {
         Connection conn = DatabaseManager.getConnection();
-        String sql = "INSERT INTO Expert (name, contact, licenseNum, specialty, username, password) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Expert (name, email, username, password, contact, licenseNum, specialty) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, expert.getName());
-        stmt.setString(2, expert.getContact());
-        stmt.setString(3, String.valueOf(expert.getLicenceNum()));
-        stmt.setString(4, "General"); // Simplified specialty for now
-        stmt.setString(5, expert.getUsername());
-        stmt.setString(6, expert.getPassword());
+        stmt.setString(2, expert.getEmail());
+        stmt.setString(3, expert.getUsername());
+        stmt.setString(4, expert.getPassword());
+        stmt.setString(5, expert.getContact());
+        stmt.setInt(6, expert.getLicenceNum());
+        stmt.setString(7, expert.getSpecialty());
 
         int rows = stmt.executeUpdate();
         stmt.close();
