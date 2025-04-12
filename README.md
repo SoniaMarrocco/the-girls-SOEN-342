@@ -43,23 +43,15 @@ This is a Java project developed using **IntelliJ IDEA**. The project is not set
      java -cp "out:src/libs/sqlite-jdbc-3.49.1.0.jar" Main 
      ```
 
-
-# To delete - Not needed anymore:
-## 1. Setting Up the SQLite JDBC Dependency
-   - The SQLite JDBC driver `.jar` file is already located in the `src/lib` directory of the project.
-     
-   - Go  to **File > Project Structure**.
-   - In the **Modules** section, click on your project and navigate to the **Dependencies** tab.
-   - Click the `+` button, then choose **JARs or directories**.
-   - Locate and select the `sqlitejdbc-3.49.1.0.jar`  and click **OK**.
-
-
+## Beginner Database
+- The `/Database/auction_system.db` fiels provides an already populated database for you to use.
+If database does not work, delete the file, navigate to src directory, and run these two prompts:
+     ```bash
+     javac -cp .:libs/sqlite-jdbc-3.49.1.0.jar Database/SQLiteDBCreator.java 
+     ```
+     ```bash
+     java -cp .:libs/sqlite-jdbc-3.49.1.0.jar Database.SQLiteDBCreator 
+     ```
 
 
 
-
-
-javac -cp .:libs/sqlite-jdbc-3.49.1.0.jar Database/SQLiteDBCreator.java
-java -cp .:libs/sqlite-jdbc-3.49.1.0.jar Database.SQLiteDBCreator
-
-Database/auction_system.db 
