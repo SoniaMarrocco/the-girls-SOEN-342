@@ -19,6 +19,6 @@ public class Consulting extends Service{
     }
 
     public void clientBookServiceTime(Client loggedInClient, int serviceId) {
-        ServiceDB.updateObjectAdvising(loggedInClient, serviceId);
+        ServiceDB.updateConsulting(loggedInClient, serviceId);
     }
 }

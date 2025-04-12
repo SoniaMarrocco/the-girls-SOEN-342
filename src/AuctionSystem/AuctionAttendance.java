@@ -18,7 +18,7 @@ public class AuctionAttendance extends Service{
     }
 
     public void clientBookServiceTime(Client loggedInClient, int serviceId) {
-        ServiceDB.updateObjectAdvising(loggedInClient, serviceId);
+        ServiceDB.updateAuctionAttendance(loggedInClient, serviceId);
     }
     
 }
