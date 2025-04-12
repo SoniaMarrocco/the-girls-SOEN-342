@@ -137,7 +137,7 @@ public class Main {
                         System.out.println("What type of service would you like to book?");
                         System.out.println("[1]: Object Consulting\n[2]: Object Advising\n[3]: Auction Attendance\n");
                         int serviceType = scanner.nextInt();
-                        
+                        scanner.nextLine();
                         while (true) {
                             if (serviceType == 1) {
                                 service = new Consulting();
@@ -146,19 +146,35 @@ public class Main {
                             else if (serviceType == 2) {
                                 service = new ObjectAdvising();
                                 break;
-
                             }
                             else if (serviceType == 3) {
                                 service = new AuctionAttendance();
                                 break;
-
                             }
                             else {
                                 System.out.println("Invalid option. Please try again.");
-
                             }
                         }
                         service.requestService();
+                        while(true) {
+                            System.out.println("Would you like to request a service? (Y = yes, N = no): ");
+                            String choice = scanner.nextLine();
+
+                            if(choice.equalsIgnoreCase("Y")){
+                                System.out.println("Which service from the list above?: ");
+                                int serviceChoice = scanner.nextInt();
+                                service.clientBookServiceTime(loggedInClient,serviceChoice );
+
+                                System.out.print("You have successfully requested this service, press any key to continue...");
+                                scanner.nextLine();
+                                scanner.nextLine();
+                                break;
+                            }
+                            else if (choice.equalsIgnoreCase("N")){break;}
+                            else {System.out.println(" Invalid Input, try again...\n");}
+                        }
+
+
                         
                     }                  
                     else if (clientOption == 4) {

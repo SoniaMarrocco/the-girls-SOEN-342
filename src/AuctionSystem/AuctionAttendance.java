@@ -5,9 +5,7 @@ import DBaccess.ServiceDB;
 public class AuctionAttendance extends Service{
     protected String type;
 
-    public AuctionAttendance() {
-
-    }
+    public AuctionAttendance() {}
 
     public AuctionAttendance(String type, String date, String startTime, String endTime) {
        super(date, startTime, endTime);
@@ -20,7 +18,7 @@ public class AuctionAttendance extends Service{
     }
 
     public void clientBookServiceTime(Client loggedInClient, int serviceId) {
-
+        ServiceDB.updateObjectAdvising(loggedInClient, serviceId);
     }
     
 }

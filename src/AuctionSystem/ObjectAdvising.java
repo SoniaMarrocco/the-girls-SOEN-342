@@ -5,9 +5,8 @@ import DBaccess.ServiceDB;
 public class ObjectAdvising extends Service{
     protected String type;
 
-    public ObjectAdvising() {
+    public ObjectAdvising() {}
 
-    }
     public ObjectAdvising(String type, String date, String startTime, String endTime) {
        super(date, startTime, endTime);
        this.type = type;
@@ -20,6 +19,6 @@ public class ObjectAdvising extends Service{
     }
 
     public void clientBookServiceTime(Client loggedInClient, int serviceId) {
-        serviceDB.
+        ServiceDB.updateObjectAdvising(loggedInClient, serviceId);
     }
 }

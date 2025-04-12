@@ -5,9 +5,7 @@ import DBaccess.ServiceDB;
 public class Consulting extends Service{
     protected String type;
 
-    public Consulting() {
-        
-    }
+    public Consulting() {}
 
     public Consulting(String type, String date, String startTime, String endTime) {
        super(date, startTime, endTime);
@@ -21,6 +19,6 @@ public class Consulting extends Service{
     }
 
     public void clientBookServiceTime(Client loggedInClient, int serviceId) {
-        
+        ServiceDB.updateObjectAdvising(loggedInClient, serviceId);
     }
 }
