@@ -31,7 +31,7 @@ public class Main {
         while(true) {
             System.out.println("\nHome Page");
             System.out.print("[1] Signup \n[2] Client Login \n[3] Expert Login\n[4] Enter System as Admin \n[5] Exit System\n");
-            System.out.println("Choose an option");
+            System.out.println("Choose an option: ");
             int option = scanner.nextInt();
 
             if (option == 1) {
@@ -83,7 +83,7 @@ public class Main {
                     int clientOption = scanner.nextInt();
 
                     if (clientOption == 1) {
-                        loggedInClient.getObjects().searchObject();
+                        Objects.searchObject();
                         System.out.print("Please enter the object ID of desired object: ");
                         int objectId = scanner.nextInt();
                         scanner.nextLine();
@@ -128,7 +128,7 @@ public class Main {
                         }
                     }
                     else if (clientOption == 2) {
-                        loggedInClient.getAuction().searchAuction();
+                        Auction.searchAuction();
                         System.out.print("Please enter the Auction ID of desired Auction: ");
                         int auctionId = scanner.nextInt();
                         
@@ -194,18 +194,29 @@ public class Main {
                 loggedInExpert = Expert.login();
                 while(true) {
                     System.out.println("[1]: Create Service (offering availability)");
-                    System.out.println("[2]: View Auctions");
-                    System.out.println("[3]: View Objects");
+                    System.out.println("[2]: View Objects");
+                    System.out.println("[3]: View Auctions");
                     System.out.println("[4]: Logout");
                     System.out.print("Choose one: ");
                     int expertOption = scanner.nextInt();
+                    scanner.nextLine();
 
                     if (expertOption == 1){
                         loggedInExpert.createService();
                     }
-                    else if (expertOption == 2){}//todo
-                    else if (expertOption == 3){}//todo
-                    else if (expertOption == 4){}
+                    else if (expertOption == 2){
+                        Objects.searchObject();
+                        System.out.print("\nPress Enter to continue...");
+                        scanner.nextLine();
+                    }
+                    else if (expertOption == 3) {
+                        Auction.searchAuction();
+                        System.out.print("\nPress Enter to continue...");
+                        scanner.nextLine();
+                        scanner.nextLine();
+
+                    }
+                    else if (expertOption == 4){ break;}
                     else {System.out.println("Invalid option try again");}
 
 

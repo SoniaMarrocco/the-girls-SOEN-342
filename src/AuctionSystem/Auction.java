@@ -37,10 +37,9 @@ public class Auction {
         this.viewing = viewing;
     }
 
-    // Static methods for interaction
-    public void searchAuction() {
+    public static void searchAuction() {
         try {
-            AuctionDB.printAllAuctions();
+            AuctionDB.getAllAuctions();
         } catch (Exception e) {
             System.err.println("Error retrieving auctions: " + e.getMessage());
         }

@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 public class AuctionDB {
 
-    public static void printAllAuctions() throws Exception {
+    public static void getAllAuctions() throws Exception {
         Connection conn = DatabaseManager.getConnection();
         String query = "SELECT auctionID, auctionTitle, speciality FROM normalAuction " +
                 "UNION " +

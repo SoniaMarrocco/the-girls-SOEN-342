@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class ObjectsDB {
 
-    public static void printAllObjects() throws Exception {
+    public static void getAllObjects() throws Exception {
         Connection conn = DatabaseManager.getConnection();
         String query = "SELECT objectsId, name, description, available FROM Objects";
 

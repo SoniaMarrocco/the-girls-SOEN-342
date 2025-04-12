@@ -19,9 +19,9 @@ public class Objects {
 
     }
 
-    public void searchObject() {
+    public static void searchObject() {
         try {
-            ObjectsDB.printAllObjects();  // Just prints them from DB
+            ObjectsDB.getAllObjects();  // Just prints them from DB
         } catch (Exception e) {
             System.err.println("Error searching for objects: " + e.getMessage());
         }
