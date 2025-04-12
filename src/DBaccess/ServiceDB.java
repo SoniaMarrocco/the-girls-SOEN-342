@@ -59,7 +59,7 @@ public class ServiceDB {
         getAllServices("auctionAttendance", "attendanceID");
     }
 
-
+//update
     public static void updateObjectAdvising(Client client, int serviceId) {
         updateService(client, serviceId, "objectAdvising", "serviceID");
     }
@@ -111,6 +111,43 @@ public class ServiceDB {
         }
     }
 
+//insert
+    public static void insertObjectAdvising(String type, String date, String startTime, String endTime, int expertId) {
+        insertService("objectAdvising", "serviceID", type, date, startTime, endTime, expertId);
+    }
+
+    public static void insertConsulting(String type, String date, String startTime, String endTime, int expertId) {
+        insertService("consulting", "consultingID", type, date, startTime, endTime, expertId);
+    }
+
+    public static void insertAuctionAttendance(String type, String date, String startTime, String endTime, int expertId) {
+        insertService("auctionAttendance", "attendanceID", type, date, startTime, endTime, expertId);
+    }
+
+    private static void insertService(String table, String idCol, String type, String date, String startTime, String endTime, int expertId) {
+        try {
+            Connection conn = DatabaseManager.getConnection();
+            String sql = "INSERT INTO " + table + " (type, date, startTime, endTime, expertId) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, type);
+            stmt.setString(2, date);
+            stmt.setString(3, startTime);
+            stmt.setString(4, endTime);
+            stmt.setInt(5, expertId);
+
+            int rows = stmt.executeUpdate();
+            stmt.close();
+
+            if (rows > 0) {
+                System.out.println("Successfully added service to " + table + ".");
+            } else {
+                System.out.println("Failed to add service to " + table + ".");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error inserting into " + table + ": " + e.getMessage());
+        }
+    }
 
 
 

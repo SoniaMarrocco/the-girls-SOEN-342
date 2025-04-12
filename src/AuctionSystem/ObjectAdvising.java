@@ -5,7 +5,7 @@ import DBaccess.ServiceDB;
 public class ObjectAdvising extends Service{
     protected String type;
 
-    public ObjectAdvising() {}
+    public ObjectAdvising() {super();}
 
     public ObjectAdvising(String type, String date, String startTime, String endTime) {
        super(date, startTime, endTime);

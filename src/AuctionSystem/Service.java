@@ -6,7 +6,6 @@ public abstract class Service {
    protected String date;
    protected String startTime;
    protected String endTime;
-   protected Client loggedInClient;
 
    // Constructor
    public Service() {

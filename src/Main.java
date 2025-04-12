@@ -14,6 +14,7 @@ import static DBaccess.ObjectsDB.getViewingFromObject;
 public class Main {
     public static void main(String[] args) throws SQLException {
         Client loggedInClient;
+        Expert loggedInExpert;
         Administrator admin = Administrator.getInstance("Admin");
         Service service;
 
@@ -54,14 +55,13 @@ public class Main {
                     System.out.println("\n--- Expert Signup ---");
                     System.out.print("Name: ");String name = scanner.nextLine();
                     System.out.print("Email: ");String email = scanner.nextLine();
-                    System.out.print("Username: ");String username = scanner.nextLine();
                     System.out.print("Password: ");String password = scanner.nextLine();
                     System.out.print("Contact Info: ");String contact = scanner.nextLine();
                     System.out.print("Specialty: ");String specialty = scanner.nextLine();
                     System.out.print("License Number: ");int licenseNum = scanner.nextInt();
                     scanner.nextLine(); // consume newline
 
-                    admin.createExpertAccount(name, email, username, password, contact, licenseNum, specialty);
+                    admin.createExpertAccount(name, email, password, contact, licenseNum, specialty);
                 }
                 else {
                     System.out.println("Invalid signup option.");
@@ -78,6 +78,7 @@ public class Main {
                     System.out.println("[2]: Search Auction");
                     System.out.println("[3]: Request a Service");
                     System.out.println("[4]: Logout");
+                    System.out.print("Choose one: ");
 
                     int clientOption = scanner.nextInt();
 
@@ -190,7 +191,25 @@ public class Main {
                 }
             }
             else if (option == 3) {
-                System.out.println("3");
+                loggedInExpert = Expert.login();
+                while(true) {
+                    System.out.println("[1]: Create Service (offering availability)");
+                    System.out.println("[2]: View Auctions");
+                    System.out.println("[3]: View Objects");
+                    System.out.println("[4]: Logout");
+                    System.out.print("Choose one: ");
+                    int expertOption = scanner.nextInt();
+
+                    if (expertOption == 1){
+                        loggedInExpert.createService();
+                    }
+                    else if (expertOption == 2){}//todo
+                    else if (expertOption == 3){}//todo
+                    else if (expertOption == 4){}
+                    else {System.out.println("Invalid option try again");}
+
+
+                }
             }
             else if (option == 4) {
                 while (true) {
@@ -208,14 +227,13 @@ public class Main {
                     if (adminOption == 1) {
                         System.out.print("Name: "); String name = scanner.nextLine();
                         System.out.print("Email: "); String email = scanner.nextLine();
-                        System.out.print("Username: "); String username = scanner.nextLine();
                         System.out.print("Password: "); String password = scanner.nextLine();
                         System.out.print("Contact Info: "); String contact = scanner.nextLine();
                         System.out.print("Specialty: "); String specialty = scanner.nextLine();
                         System.out.print("License Number: "); int licenseNum = scanner.nextInt();
                         scanner.nextLine();
 
-                        admin.createExpertAccount(name, email, username, password, contact, licenseNum, specialty);
+                        admin.createExpertAccount(name, email, password, contact, licenseNum, specialty);
                     }
 
                     else if (adminOption == 2) {

@@ -54,9 +54,9 @@ public class Administrator {
         }
     }
 
-    public void createExpertAccount(String name, String email, String username, String password, String contact, int licenseNum, String specialty) {
+    public void createExpertAccount(String name, String email, String password, String contact, int licenseNum, String specialty) {
         try {
-            Expert expert = new Expert(name, email, username, password, contact, licenseNum, specialty);
+            Expert expert = new Expert(name, email, password, contact, licenseNum, specialty);
             boolean success = ExpertDB.insertExpert(expert);
             if (success) {
                 System.out.println("Expert account successfully created.");
