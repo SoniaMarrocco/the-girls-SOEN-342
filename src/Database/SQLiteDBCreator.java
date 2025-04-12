@@ -32,7 +32,7 @@ public class SQLiteDBCreator {
                     "CREATE TABLE IF NOT EXISTS auctionAttendance (attendanceID INTEGER PRIMARY KEY, type TEXT, date TEXT, startTime TEXT, endTime TEXT, clientId INTEGER, expertId INTEGER, FOREIGN KEY(clientId) REFERENCES Client(clientId), FOREIGN KEY(expertId) REFERENCES Expert(expertId));",
                     "CREATE TABLE IF NOT EXISTS EventSchedule (locationId INTEGER, scheduleId INTEGER, auctionId INTEGER, PRIMARY KEY(locationId, scheduleId), FOREIGN KEY(locationId) REFERENCES Location(locationId), FOREIGN KEY(scheduleId) REFERENCES Schedule(scheduleId), FOREIGN KEY(auctionId) REFERENCES normalAuction(auctionID));",
                     "CREATE TABLE IF NOT EXISTS Location (locationId INTEGER PRIMARY KEY, address TEXT, city TEXT);",
-                    "CREATE TABLE IF NOT EXISTS Schedule (scheduleId INTEGER PRIMARY KEY, date TEXT, time TEXT);"
+                    "CREATE TABLE IF NOT EXISTS Schedule (scheduleId INTEGER PRIMARY KEY, date TEXT, startTime TEXT, endTime TEXT);"
             };
 
             for (String sql : createTables) {
@@ -89,9 +89,9 @@ public class SQLiteDBCreator {
             for (String sql : locations) stmt.executeUpdate(sql);
 
             String[] schedules = {
-                    "INSERT INTO Schedule (date, time) VALUES ('2024-04-10', '10:00');",
-                    "INSERT INTO Schedule (date, time) VALUES ('2024-04-15', '14:00');",
-                    "INSERT INTO Schedule (date, time) VALUES ('2024-04-25', '16:00');"
+                    "INSERT INTO Schedule (date, startTime, endTime) VALUES ('2024-04-10', '10:00', '12:00');",
+                    "INSERT INTO Schedule (date, startTime, endTime) VALUES ('2024-04-15', '14:00', '15:00' );",
+                    "INSERT INTO Schedule (date, startTime, endTime) VALUES ('2024-04-25', '16:00', '18:00');"
             };
             for (String sql : schedules) stmt.executeUpdate(sql);
 

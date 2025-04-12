@@ -27,9 +27,9 @@ public class Main {
             System.err.println("Database error: " + e.getMessage());
         }
 
-        System.out.println("\n=== Welcome to the Auction System ===");
+        System.out.println("\n==== Welcome to the Auction System ====");
         while(true) {
-            System.out.println("\nHome Page");
+            System.out.println("\n====Home Page====");
             System.out.print("[1] Signup \n[2] Client Login \n[3] Expert Login\n[4] Enter System as Admin \n[5] Exit System\n");
             System.out.println("Choose an option: ");
             int option = scanner.nextInt();
@@ -59,7 +59,7 @@ public class Main {
                     System.out.print("Contact Info: ");String contact = scanner.nextLine();
                     System.out.print("Specialty: ");String specialty = scanner.nextLine();
                     System.out.print("License Number: ");int licenseNum = scanner.nextInt();
-                    scanner.nextLine(); // consume newline
+                    scanner.nextLine();
 
                     admin.createExpertAccount(name, email, password, contact, licenseNum, specialty);
                 }
@@ -74,6 +74,7 @@ public class Main {
                 loggedInClient = login();
 
                 while(true) {
+                    System.out.println("====Client Menu====");
                     System.out.println("[1]: Search Object");
                     System.out.println("[2]: Search Auction");
                     System.out.println("[3]: Request a Service");
@@ -176,13 +177,8 @@ public class Main {
                             else {System.out.println(" Invalid Input, try again...\n");}
                         }
 
-
-                        
                     }                  
                     else if (clientOption == 4) {
-                        break;
-                    }
-                    else if (clientOption == 5) {
                         break;
                     }
                     else {
@@ -193,6 +189,7 @@ public class Main {
             else if (option == 3) {
                 loggedInExpert = Expert.login();
                 while(true) {
+                    System.out.println("====Expert Menu====");
                     System.out.println("[1]: Create Service (offering availability)");
                     System.out.println("[2]: View Objects");
                     System.out.println("[3]: View Auctions");
@@ -224,7 +221,7 @@ public class Main {
             }
             else if (option == 4) {
                 while (true) {
-                    System.out.println("\n====== Admin Menu ======");
+                    System.out.println("\n==== Admin Menu ====");
                     System.out.println("[1] Create Expert Account");
                     System.out.println("[2] Create Object");
                     System.out.println("[3] Create Auction");
@@ -257,7 +254,6 @@ public class Main {
                             AdminDB.getAllAuctionHouses();
                             System.out.print("Select Auction House ID to associate: "); int houseId = scanner.nextInt();
                             scanner.nextLine();
-
 
                             System.out.println("\nAssociate this object with:");
                             System.out.println("[1] Normal (In-person) Auction");
@@ -330,7 +326,7 @@ public class Main {
             }
         }
 
-        System.out.println("\nThank you for using the Auction System!");
+        System.out.println("\n\nThank you for using the Auction System!\n");
     }
     
 
