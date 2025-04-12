@@ -8,18 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class eventScheduleDB {
-    
-    /**
-     * Creates a new event schedule entry with location and timing details
-     * 
-     * @param address The street address of the event
-     * @param city The city where the event will be held
-     * @param date The date of the event (format: YYYY-MM-DD)
-     * @param startTime The starting time (format: HH:MM)
-     * @param endTime The ending time (format: HH:MM)
-     * @param auctionId The ID of the auction this schedule is for
-     * @return true if successful, false otherwise
-     */
+
     public static boolean createEventSchedule(String address, String city, String date, 
                                              String startTime, String endTime, int auctionId) {
         String sql = "INSERT INTO EventSchedule (address, city, date, startTime, endTime, auctionId) " +
@@ -45,13 +34,7 @@ public class eventScheduleDB {
             return false;
         }
     }
-    
-    /**
-     * Gets the most recently created auction ID
-     * This is useful for immediately creating a schedule after creating an auction
-     * 
-     * @return the last inserted auction ID or -1 if an error occurred
-     */
+
     public static int getLastInsertedAuctionId() {
         String sql = "SELECT MAX(auctionID) as last_id FROM normalAuction";
         
