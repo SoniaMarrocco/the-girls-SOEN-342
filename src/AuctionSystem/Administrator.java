@@ -118,11 +118,10 @@ public class Administrator {
         }
     }
 
-    public void createObject(String name, String description, boolean available, int auctionHouseId, int normalAuctionId, int onlineAuctionId) throws SQLException {
-
-            Objects object = new Objects(name, description, available);
-            AdminDB.insertObject(object, auctionHouseId, normalAuctionId, onlineAuctionId);
-            System.out.println("Object created.");
+    public void createObject(String name, String description, boolean available, int auctionHouseId, Integer normalAuctionId, Integer onlineAuctionId) throws SQLException {
+        Objects object = new Objects(name, description, available);
+        AdminDB.insertObject(object, auctionHouseId, normalAuctionId, onlineAuctionId);
+        System.out.println("Object created.");
     }
 
 
