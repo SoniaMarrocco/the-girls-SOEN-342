@@ -64,7 +64,6 @@ public class Auction {
     }
 
 
-
     @Override
     public String toString() {
         return  auctionTitle + " (" + specialty + ")";

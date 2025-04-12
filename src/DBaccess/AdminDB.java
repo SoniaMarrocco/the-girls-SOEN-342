@@ -1,9 +1,6 @@
 package DBaccess;
 
-import AuctionSystem.Auction;
-import AuctionSystem.AuctionHouse;
-import AuctionSystem.Client;
-import AuctionSystem.Objects;
+import AuctionSystem.*;
 import Database.DatabaseManager;
 
 import java.sql.Connection;
@@ -52,7 +49,7 @@ public class AdminDB {
         stmt.executeUpdate();
         stmt.close();
     }
-    public static void insertAuction(Auction auction, int auctionHouseId) throws SQLException {
+    public static void insertNormalAuction(NormalAuction auction, int auctionHouseId) throws SQLException {
         Connection conn = DatabaseManager.getConnection();
         String sql = "INSERT INTO normalAuction (speciality, auctionTitle, auctionHouseId) VALUES (?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -62,6 +59,18 @@ public class AdminDB {
         stmt.executeUpdate();
         stmt.close();
     }
+
+    public static void insertOnlineAuction(OnlineAuction auction, int auctionHouseId) throws SQLException {
+        Connection conn = DatabaseManager.getConnection();
+        String sql = "INSERT INTO onlineAuction (speciality, auctionTitle, auctionHouseId) VALUES (?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, auction.getSpecialty());
+        stmt.setString(2, auction.getAuctionTitle());
+        stmt.setInt(3, auctionHouseId);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
     public static void insertObject(Objects object, int auctionHouseId, Integer normalAuctionId, Integer onlineAuctionId) throws SQLException {
         Connection conn = DatabaseManager.getConnection();
         String sql = "INSERT INTO Objects (name, description, available, auctionHouseID, normalAuctionId, onlineAuctionId) VALUES (?, ?, ?, ?, ?, ?)";

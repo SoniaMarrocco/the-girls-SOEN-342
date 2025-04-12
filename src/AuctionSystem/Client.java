@@ -15,7 +15,6 @@ public class Client {
     private Auction auction = new Auction();
     private Objects objects = new Objects();
 
-    private static Client loggedInClient;
 
     // --- Constructor ---
     public Client(String name, String email, String password, String affiliation, String contactInfo, String description) {
@@ -30,6 +29,7 @@ public class Client {
     // --- Login Method ---
     public static Client login() {
         Scanner scanner = new Scanner(System.in);
+        Client loggedInClient = null;
 
         while (true) {
             System.out.print("Enter your email: ");
@@ -38,7 +38,7 @@ public class Client {
             System.out.print("Enter your password: ");
             String pass = scanner.nextLine();
 
-            Client client = verifyCredentials(email, pass);
+            Client client = validateCredentials(email, pass);
 
             if (client != null) {
                 loggedInClient = client;
@@ -53,7 +53,7 @@ public class Client {
     }
 
     // Uses DAO to verify credentials
-    private static Client verifyCredentials(String email, String password) {
+    private static Client validateCredentials(String email, String password) {
         try {
             return ClientDB.getClientByCredentials(email, password);
         } catch (Exception e) {
@@ -61,11 +61,6 @@ public class Client {
             return null;
         }
     }
-
-    public static Client getLoggedInClient() {
-        return loggedInClient;
-    }
-
     // --- Getters and Setters ---
 
     public String getName() {
@@ -112,10 +107,6 @@ public class Client {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Auction getAuction() {
         return auction;
     }
@@ -128,7 +119,4 @@ public class Client {
         return objects;
     }
 
-    public void setObjects(Objects object) {
-        this.objects = object;
-    }
 }

@@ -4,16 +4,14 @@ import DBaccess.AdminDB;
 import DBaccess.ExpertDB;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Administrator {
     private String name;
-    private ArrayList<Client> clients;
     private static Administrator adminInstance;
 
     private Administrator(String name) {
         this.name = name;
-        this.clients = new ArrayList<>();
     }
 
     public static Administrator getInstance(String name) {
@@ -28,7 +26,6 @@ public class Administrator {
         boolean approved = approveClientSignUp(newClient);
 
         if (approved) {
-            clients.add(newClient);
             System.out.println("Sign up successful!");
         } else {
             System.out.println("Sign up was rejected.");
@@ -41,12 +38,10 @@ public class Administrator {
                 System.out.println("Email is already registered.");
                 return false;
             }
-
             if (client.getPassword().length() < 8) {
                 System.out.println("Password must be at least 8 characters long.");
                 return false;
             }
-
             return AdminDB.insertClient(client);
         } catch (Exception e) {
             System.err.println("Error during client sign-up approval: " + e.getMessage());
@@ -76,13 +71,29 @@ public class Administrator {
     }
 
     public void createAuction(String specialty, String title, int auctionHouseId) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
 
-            Auction auction = new Auction(specialty, title);
-            AdminDB.insertAuction(auction, auctionHouseId);
-            System.out.println("Auction created.");
+        System.out.println("Which type of auction would you like to create?");
+        System.out.println("[1] Normal (In-person) Auction");
+        System.out.println("[2] Online Auction");
+        System.out.print("Your choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+
+        if (choice == 1) {
+            NormalAuction normalAuction = new NormalAuction(specialty, title);
+            AdminDB.insertNormalAuction(normalAuction, auctionHouseId); // <-- updated
+            System.out.println("Normal auction created.");
+        } else if (choice == 2) {
+            OnlineAuction onlineAuction = new OnlineAuction(specialty, title);
+            AdminDB.insertOnlineAuction(onlineAuction, auctionHouseId); // <-- updated
+            System.out.println("Online auction created.");
+        } else {
+            System.out.println("Invalid selection. No auction created.");
+        }
     }
 
-    public void createObject(String name, String description, boolean available, int auctionHouseId, Integer normalAuctionId, Integer onlineAuctionId) throws SQLException {
+    public void createObject(String name, String description, boolean available, int auctionHouseId, int normalAuctionId, int onlineAuctionId) throws SQLException {
 
             Objects object = new Objects(name, description, available);
             AdminDB.insertObject(object, auctionHouseId, normalAuctionId, onlineAuctionId);
@@ -90,11 +101,8 @@ public class Administrator {
     }
 
 
-    // --- Getters & Setters ---
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public ArrayList<Client> getClients() { return clients; }
-    public void setClients(ArrayList<Client> clients) { this.clients = clients; }
+
 }

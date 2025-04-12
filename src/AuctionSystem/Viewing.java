@@ -4,7 +4,7 @@ import DBaccess.ViewingDB;
 
 public class Viewing {
     private int viewingId;
-    private String catalog;
+    private String catalogName;
 
     public Viewing() {}
 
@@ -30,10 +30,10 @@ public class Viewing {
     }
 
     public String getCatalog() {
-        return catalog;
+        return catalogName;
     }
 
-    public void setCatalog(String catalog) {
-        this.catalog = catalog;
+    public void setCatalog(String catalogName) {
+        this.catalogName = catalogName;
     }
 }

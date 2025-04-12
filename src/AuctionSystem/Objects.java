@@ -6,7 +6,6 @@ public class Objects {
     private String name;
     private String description;
     private Boolean available;
-    private Auction auction;  // Optional if you track it in-memory
 
     // Constructor
     public Objects(String name, String description, Boolean available) {
@@ -41,8 +40,6 @@ public class Objects {
         return "Name: " + name + "\nDescription: " + description + "\nAvailable: " + (available ? "Yes" : "No");
     }
 
-    // --- Getters and Setters ---
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -52,6 +49,4 @@ public class Objects {
     public Boolean getAvailable() { return available; }
     public void setAvailable(Boolean available) { this.available = available; }
 
-    public Auction getAuction() { return auction; }
-    public void setAuction(Auction auction) { this.auction = auction; }
 }

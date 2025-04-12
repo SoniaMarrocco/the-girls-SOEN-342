@@ -70,14 +70,12 @@ public class Expert {
         System.out.print("Enter type of service (description): ");
         String type = scanner.nextLine();
 
-        // Use license number to get DB expert ID
         int expertId = ExpertDB.getExpertIdByLicenseNum(this.getLicenceNum());
 
         if (expertId == -1) {
             System.out.println("Failed to locate expert ID. Service creation aborted.");
             return;
         }
-
         switch (choice) {
             case 1 -> ServiceDB.insertObjectAdvising(type, date, startTime, endTime, expertId);
             case 2 -> ServiceDB.insertConsulting(type, date, startTime, endTime, expertId);
