@@ -8,11 +8,25 @@
 - **Somiya Amroso Colatosti**  
   Student ID: 40190025
 
-## Iteration2:
+# Iteration2:
   Design Pattern: Singletone implemented in Administrator class
 
-# Java Project
-This is a Java project developed using **IntelliJ IDEA**. The project is not set up with **Maven** or **Gradle**, so dependencies must be added manually.
+In our system, the singleton design pattern with lazy initialization was used for creating the admin account for a session. This is because through the system session, only one admin is allowed. Hence if you look in the `AuctionSystem/Administrater.java` class...
+- The constructor is private
+- There is the private static AdminInstance
+- the public static `getInstance()` is the only way to get the admin instance
+
+ Architecture: Layered Architecture
+- Presentation Layer: Main.java (User interaclion and terminal flow)
+- Domain Logic Layer: AuctionSystem (Core application logic)
+- Persistence Layer: DBAccess (Data access and manipulation)
+- Infrastructure: Database (Squlite database and low level database setup and connection)
+
+# Iteration3: 
+Iteration 3 contains all of the combined system diagrams, system sequence diagrams, contracts... of all the other iterations combined. 
+
+## Java Project
+This is a Java project developed using **IntelliJ IDEA**. The project is not set up with **Maven** or **Gradle**.
 
 
 ## Running the Project
