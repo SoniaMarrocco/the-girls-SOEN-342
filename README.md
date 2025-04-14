@@ -22,7 +22,7 @@ In our system, the singleton design pattern with lazy initialization was used fo
 - There is the private static AdminInstance
 - the public static `getInstance()` is the only way to get the admin instance
 
- Architecture: Layered Architecture
+ Architecture: Layered Architecture (through `Table Data Gateway`)
 - Presentation Layer: Main.java (User interaclion and terminal flow)
 - Domain Logic Layer: AuctionSystem (Core application logic)
 - Persistence Layer : DBAccess (`Table Data Gateway` --> Data access and manipulation)
