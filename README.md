@@ -25,7 +25,7 @@ In our system, the singleton design pattern with lazy initialization was used fo
  Architecture: Layered Architecture
 - Presentation Layer: Main.java (User interaclion and terminal flow)
 - Domain Logic Layer: AuctionSystem (Core application logic)
-- Persistence Layer: DBAccess (Data access and manipulation)
+- Persistence Layer : DBAccess (`Table Data Gateway` --> Data access and manipulation)
 - Infrastructure: Database (Squlite database and low level database setup and connection)
 
 # Iteration3: 
