@@ -12,17 +12,17 @@
   - this includes all iteration 1 and 2 work
  
 **DEMO VIDEO**
-https://drive.google.com/file/d/1MVqEJwTqQZaWQok14BWJvvO4DL-ilWp8/view?usp=sharing
+https://drive.google.com/file/d/17Qqk_lzgWUI23zPVs5kd-EppaoIXqvPr/view?usp=sharing
 
 # Iteration2:
-  Design Pattern: Singletone implemented in Administrator class
+  **Design Pattern:** Singletone implemented in Administrator class
 
 In our system, the singleton design pattern with lazy initialization was used for creating the admin account for a session. This is because through the system session, only one admin is allowed. Hence if you look in the `AuctionSystem/Administrater.java` class...
 - The constructor is private
 - There is the private static AdminInstance
 - the public static `getInstance()` is the only way to get the admin instance
 
- Architecture: Layered Architecture (through `Table Data Gateway`)
+ **Architecture:** Layered Architecture (through `Table Data Gateway`)
 - Presentation Layer: Main.java (User interaclion and terminal flow)
 - Domain Logic Layer: AuctionSystem (Core application logic)
 - Persistence Layer : DBAccess (`Table Data Gateway` --> Data access and manipulation)
